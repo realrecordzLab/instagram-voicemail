@@ -40,7 +40,7 @@ exports.messageLogger = (data, threads) => {
             break;
         case 'voice_media':
             //thread.voice_media.media.audio.audio_src
-            const filename = paht.basename(data.message.voice_media.media.audio.audio_src);
+            const filename = path.basename(data.message.voice_media.media.audio.audio_src);
             const downloadDir = path.format({dir: __dirname, base: `media/${filename}`});
             const stream = fs.createWriteStream(downloadDir);
             https.get(data.message.voice_media.media.audio.audio_src, (response) => {
