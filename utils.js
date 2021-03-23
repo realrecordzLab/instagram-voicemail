@@ -1,15 +1,27 @@
 //
 const moment = require('moment');
 const chalk = require('chalk');
+const exec = require('child_process').exec;
 const path = require('path');
 const https = require('https');
 const fs = require('fs');
 
-
+// ffmpeg -i in.mp3 -c:a aac -ar 44100 -metadata:g com.android.version="8.0.0" -movflags use_metadata_tags out.mp4
+exports.createVoicemailFile = () => {
+    const inputPath = path.format({dir: __dirname, base: 'voicemail.mp3'});
+    const outputPath = path.format({dir: __dirname, base: 'voicemail.mp4'});
+    console.log(chalk.yellow('voicemail file creation in progress...'));
+    exec(`ffmpeg -i ${inputPath} -c:a aac -ar 44100 -metadata:g com.android.version="8.0.0" -movflags use_metadata_tags ${outputPath}`, (error, stdout) => {
+        if( error ){
+            console.log(error);
+        }
+        console.log(chalk.green('voicemail file created!'));
+    });
+}
 
 exports.messageLogger = (data, threads) => {
-    const timestamp = moment(Number(data.message.timestamp) / 1000);
-    console.log(chalk.magenta('+---NEW MESSAGE---+'));
+    const timestamp = moment(data.message.timestamp / 1000);
+    console.log(chalk.magenta(`+---NEW MESSAGE---+`));
     console.log(chalk.yellow(`Conversation with: ${threads.get(data.message.thread_id)}`));
     console.log(chalk.yellow(`Date: ${timestamp}`));
     switch(data.message.item_type){
@@ -17,7 +29,9 @@ exports.messageLogger = (data, threads) => {
             if(!data.message.hasOwnProperty('reactions')){
                 console.log(chalk.grey(`${data.message.text}`));
             }else{
-                console.log(chalk.yellow(`${threads.get(data.message.thread_id)} liked your last message!`));
+                if( data.message.reactions.likes[0].sender_id === data.message.user_id ){
+                    console.log(chalk.grey(`${threads.get(data.message.thread_id)} liked your last message!`));
+                }
             }
             break;
         case 'voice_media':

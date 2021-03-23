@@ -1,10 +1,10 @@
 {
   "name": "instagram-voicemail",
   "version": "1.0.0",
-  "description": "A simple CLI tool for Instagram DM",
+  "description": "A simple CLI bot for Instagram DM",
   "main": "index.js",
   "bin": "index.js",
-  "author": "Bruno Paolillo",
+  "author": "Bruno Paolillo <bru.paolillo@gmail.com>",
   "license": "ISC",
   "dependencies": {
     "boxen": "^5.0.0",
