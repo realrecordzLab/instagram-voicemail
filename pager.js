@@ -44,7 +44,7 @@ ig.state.generateDevice(process.env.IG_USERNAME);
         } else {
             messageLogger(ig, data, threads);
         }
-        console.log(process.env.ENABLE_BOT);
+        //console.log(process.env.ENABLE_BOT);
         if( process.env.ENABLE_BOT ){
             if( !String(data.message.path).endsWith('has_seen') && String(data.message.user_id) !== ig.state.cookieUserId ){
                 await ig.entity.directThread(data.message.thread_id).broadcastVoice({
