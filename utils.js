@@ -5,6 +5,8 @@ const path = require('path');
 const https = require('https');
 const fs = require('fs');
 
+
+
 exports.messageLogger = (data, threads) => {
     const timestamp = moment(Number(data.message.timestamp) / 1000);
     console.log(chalk.magenta('+---NEW MESSAGE---+'));
@@ -12,10 +14,11 @@ exports.messageLogger = (data, threads) => {
     console.log(chalk.yellow(`Date: ${timestamp}`));
     switch(data.message.item_type){
         case 'text':
-            if( data.message.hasOwnProperty('reactions') ){
-                console.log(chalk.yellow(`${threads.get(data.message.thread_id)} liked your last message`));
-            }    
-            console.log(chalk.grey(`${data.message.text}`));
+            if(!data.message.hasOwnProperty('reactions')){
+                console.log(chalk.grey(`${data.message.text}`));
+            }else{
+                console.log(chalk.yellow(`${threads.get(data.message.thread_id)} liked your last message!`));
+            }
             break;
         case 'voice_media':
             //thread.voice_media.media.audio.audio_src
