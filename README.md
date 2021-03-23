@@ -11,7 +11,9 @@ npm install
 ```
 Before run the script, create a new folder and call it `media` inside the project folder. It will hold all the audio messages that will be sended to you when the script is running. 
 
-To use the voicemail bot you need to have the `ffmpeg` library installed in your system. Place inside the script folder an `mp3` file named `voicemail.mp3`. The script, when you choose to enable the bot, will look for this file and will take care to convert it into the instagram accepted audio format. Be sure to use only files of the maximum duration of 1:00 minutes
+To use the voicemail bot you need to have the `ffmpeg` library installed in your system. Place inside the script folder an `mp3` file named `voicemail.mp3`. The script, when you choose to enable the bot, will look for this file and will take care to convert it into the instagram accepted audio format. Be sure to use only files of the maximum duration of 1:00 minutes. 
+
+To replace your voicemail message, simply replace the `voicemail.mp3` file and delete the auto generated `voicemail.mp4` file.
 
 Run the script
 ```
