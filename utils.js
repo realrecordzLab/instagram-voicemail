@@ -11,7 +11,10 @@ exports.messageLogger = (data, threads) => {
     console.log(chalk.yellow(`Conversation with: ${threads.get(data.message.thread_id)}`));
     console.log(chalk.yellow(`Date: ${timestamp}`));
     switch(data.message.item_type){
-        case 'text':    
+        case 'text':
+            if( data.message.hasOwnProperty('reactions') ){
+                console.log(chalk.yellow(`${threads.get(data.message.thread_id)} like your last message\n`));
+            }    
             console.log(chalk.grey(`${data.message.text}`));
             break;
         case 'voice_media':
@@ -23,9 +26,6 @@ exports.messageLogger = (data, threads) => {
                 response.pipe(stream);
                 console.log(chalk.yellow(`New vocal message received and saved in: ${downloadDir}\n`));
             });
-            break;
-        case 'like':
-            console.log(chalk.yellow(`${threads.get(data.message.thread_id)} like your message`));
             break;
     }
     console.log(chalk.magenta(`-------------------\n`));
