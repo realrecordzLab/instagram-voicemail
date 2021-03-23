@@ -13,7 +13,7 @@ exports.messageLogger = (data, threads) => {
     switch(data.message.item_type){
         case 'text':
             if( data.message.hasOwnProperty('reactions') ){
-                console.log(chalk.yellow(`${threads.get(data.message.thread_id)} like your last message\n`));
+                console.log(chalk.yellow(`${threads.get(data.message.thread_id)} liked your last message`));
             }    
             console.log(chalk.grey(`${data.message.text}`));
             break;
