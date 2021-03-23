@@ -40,15 +40,17 @@ ig.state.generateDevice(process.env.IG_USERNAME);
         if( !threads.has(data.message.thread_id) ){
             const thread = await ig.feed.directThread({thread_id: data.message.thread_id}).request();
             threads.set(data.message.thread_id, thread.thread.users[0].full_name);
-            messageLogger(data, threads);
+            messageLogger(ig, data, threads);
         } else {
-            messageLogger(data, threads);
+            messageLogger(ig, data, threads);
         }
-        
+        console.log(process.env.ENABLE_BOT);
         if( process.env.ENABLE_BOT ){
-            await ig.entity.directThread(data.message.thread_id).broadcastVoice({
-                file: fs.readFileSync(voicemailFile)
-            });     
+            if( !String(data.message.path).endsWith('has_seen') && String(data.message.user_id) !== ig.state.cookieUserId ){
+                await ig.entity.directThread(data.message.thread_id).broadcastVoice({
+                    file: fs.readFileSync(voicemailFile)
+                });  
+            }   
         }
     });
         
