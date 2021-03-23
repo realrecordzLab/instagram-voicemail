@@ -10,13 +10,17 @@ const fs = require('fs');
 exports.createVoicemailFile = () => {
     const inputPath = path.format({dir: __dirname, base: 'voicemail.mp3'});
     const outputPath = path.format({dir: __dirname, base: 'voicemail.mp4'});
-    console.log(chalk.yellow('voicemail file creation in progress...'));
-    exec(`ffmpeg -i ${inputPath} -c:a aac -ar 44100 -metadata:g com.android.version="8.0.0" -movflags use_metadata_tags ${outputPath}`, (error, stdout) => {
-        if( error ){
-            console.log(error);
-        }
-        console.log(chalk.green('voicemail file created!'));
-    });
+    if( !fs.existsSync(outputPath) ){    
+        console.log(chalk.yellow('voicemail file creation in progress...'));
+        exec(`ffmpeg -i ${inputPath} -c:a aac -ar 44100 -metadata:g com.android.version="8.0.0" -movflags use_metadata_tags ${outputPath}`, (error, stdout) => {
+            if( error ){
+                console.log(error);
+            }
+            console.log(chalk.green('voicemail file created!'));
+        });
+    } else {
+        console.log(chalk.yellow('voicemail file found!'));
+    }
 }
 
 exports.messageLogger = (data, threads) => {
