@@ -1,4 +1,3 @@
-//TODO migliorare codice
 const moment = require('moment');
 const chalk = require('chalk');
 const exec = require('child_process').exec;
@@ -40,7 +39,7 @@ exports.messageLogger = (client, data, threads) => {
             break;
         case 'voice_media':
             //thread.voice_media.media.audio.audio_src
-            const filename = new URL(data.message.voice_media.media.audio.audio_src).pathname.replace('/', '');
+            const filename = new URL(data.message.voice_media.media.audio.audio_src).pathname.split('/').pop();
             const downloadDir = path.format({dir: __dirname, base: `media/${filename}`});
             const stream = fs.createWriteStream(downloadDir);
             https.get(data.message.voice_media.media.audio.audio_src, (response) => {
